@@ -8,8 +8,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.hito.rvpractice.adapter.Test1Adapter;
+import com.hito.rvpractice.adapter.base.BasicAdapter;
+import com.hito.rvpractice.factory.ListTypeFactory;
+import com.hito.rvpractice.model.Dog;
+import com.hito.rvpractice.model.IType;
+import com.hito.rvpractice.model.Pig;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     private ArrayList<String> mData;
     private Test1Adapter      mTest1Adapter;
+    private List<IType> animals = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +34,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        initData();
-        initRV();
+//        initData();
+//        initRV();
+        initBData();
+        initBRV();
+    }
+
+    private void initBRV() {
+        BasicAdapter basicAdapter = new BasicAdapter(new ListTypeFactory(), this, animals);
+        mRecyclerView.setAdapter(basicAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    private void initBData() {
+        for (int i = 0; i < 10; i++) {
+            animals.add(new Dog(1+" 狗"));
+            animals.add(new Pig(1+" 猪"));
+        }
     }
 
     // 初始化RecyclerView
