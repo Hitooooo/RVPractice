@@ -31,11 +31,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void initRV() {
         RightAdapter rightAdapter = new RightAdapter(this, mProducts);
+        // 设置三列，
         final GridLayoutManager manager = new GridLayoutManager(this, 3);
+        // span（跨度的意思） 如果是头的话，就自己占一栏也就是跨了3列
+        // 如果是普通item就直接是1列
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return mProducts.get(position).getType() == 0 ? 1 : manager.getSpanCount();
+                return mProducts.get(position).getType() == 0 ? 3 :1;
+//                return (3 - position % 3);
             }
         });
         mRvRight.setLayoutManager(manager);
